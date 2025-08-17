@@ -21,3 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "i2048"
 include(":app")
+include(":data")
+include(":domain")

@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.devtools.ksp") version "2.1.21-2.0.1"
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -39,6 +41,10 @@ android {
     buildFeatures {
         compose = true
     }
+    ksp {
+        arg("option_name", "option_value")
+        arg("room.schemaLocation", "$projectDir/schemas")
+    }
 }
 
 dependencies {
@@ -58,4 +64,37 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+//    Modules
+    implementation(project(":data"))
+    implementation(project(":domain"))
+
+//    Dagger hilt
+    implementation(libs.daggerHilt)
+    implementation(libs.daggerHiltNavigationCompose)
+    ksp(libs.daggerHiltCompiler)
+
+//    Room SQLite
+    implementation(libs.room)
+    implementation(libs.roomCoroutinesSupport)
+    ksp(libs.roomCompiler)
+
+//    Navigation
+    implementation(libs.navigation)
+
+//    Coroutines & lifecycle
+    implementation(libs.kotlinCoroutines)
+    implementation(libs.viewModel)
+    implementation(libs.viewModelForCompose)
+    implementation(libs.lifecycleCompose)
+    implementation(libs.savedState)
+
+//    System UI controller
+    implementation(libs.systemUiController)
+
+//    Lottie animations
+    implementation(libs.lottieanimations)
+
+//    DataStore
+    implementation(libs.androidx.dataStore)
 }
